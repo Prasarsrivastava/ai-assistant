@@ -1,4 +1,5 @@
-import User from "../models/user.model.js"
+import e from "express"
+import User from "../models/user.models.js"
 import bcrypt from "bcryptjs"
 export const signUp = async (req, res) => {
     try{
@@ -78,9 +79,10 @@ catch(error){
 }
 export const logOut=async(req,res)=>{
     try{
-        res.cookie("token")
+        res.clearcookie("token")
         return res.status(200).json({message:"Logged out successfully"})
     }catch (error){
         return res.status(500).json({message:`Logout error ${error}`})
     }
 }
+export default {signUp,Login,logOut}

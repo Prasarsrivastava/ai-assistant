@@ -1,9 +1,8 @@
-import e from "express";
-import React from "react";
-
+ import React from "react";
+import bg from "../assets/authBg.png"
 function SignUp() {
   return (
-    <div >Sign Up Page</div>
+    <div className ='w-full h-[100vh]' style={{backgroundImage:'url(${bg})'}}></div>
   )
 }
 export default SignUp;

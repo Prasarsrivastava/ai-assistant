@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import connectDB from "./config/db.js";
 import authRouter from "./routes/auth.routes.js";
 import cookieParser from "cookie-parser";
+import authcontroller from "./controllers/auth.controller.js";
 dotenv.config()
 
 const app=express()
