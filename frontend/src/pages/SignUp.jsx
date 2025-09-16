@@ -1,40 +1,61 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bg from "../assets/authBg.png";
 import { BsEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
+import axios from "axios";
+import { UserDataContext } from "../context/UserContext.jsx";
 
 function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  const {serverUrl}=useContext(UserDataContext);
+ 
+ const navigate = useNavigate();
+  // const togglePasswordVisibility = () => {
+  //   setShowPassword(!showPassword);
+  // };
+  const [name,setName]=useState("");
+  const [email,setEmail]=useState("");
+  const [password,setPassword]=useState("");
+  const handleSignUp=async(e)=>{
+    e.preventDefault();
+try{
+  let result=await axios.post(`${serverUrl}/api/auth/signup`,{name,email,password},{withCredentials:true});
+  console.log(result);
+}
+catch(err){
+  console.log(err);
+}
+  }
 
   return (
     <div 
       className="w-full h-screen bg-cover bg-center bg-no-repeat flex justify-center items-center" 
       style={{ backgroundImage: `url(${bg})` }}
     >
-      <form className="w-[90%] h-[600px] max-w-[500px] bg-black/20 backdrop-blur-sm shadow-lg shadow-black flex flex-col justify-center items-center gap-6 rounded-lg p-8">
+      <form className="w-[90%] h-[600px] max-w-[500px] bg-black/20 backdrop-blur-sm shadow-lg shadow-black flex flex-col justify-center items-center gap-6 rounded-lg p-8" onSubmit={handleSignUp}>
         <h1 className="text-white text-3xl font-semibold mb-8">
           Register to <span className="text-blue-400">Virtual Assistant</span>
         </h1>
         <input 
           type="text" 
           placeholder="Enter your Name" 
-          className="w-full h-[60px] outline-none border-2 border-white bg-transparent text-white placeholder:text-gray-300 rounded-lg px-4"
+          className="w-full h-[60px] outline-none border-2 border-white bg-transparent text-white placeholder:text-gray-300 rounded-lg px-4" required onChange={(e)=>setName(e.target.value)}
+          value={name}
         />
         <input 
           type="email" 
           placeholder="Enter your email id" 
           className="w-full h-[60px] outline-none border-2 border-white bg-transparent text-white placeholder:text-gray-300 rounded-lg px-4"
+        required onChange={(e)=>setEmail(e.target.value)}
+          value={email}
         />
         <div className="w-full h-[60px] relative">
           <input 
             type={showPassword ? "text" : "password"}
             placeholder="Enter your password" 
             className="w-full h-full outline-none border-2 border-white bg-transparent text-white placeholder:text-gray-300 rounded-lg px-4"
+            required onChange={(e)=>setPassword(e.target.value)}
+          value={password}
           />
           {showPassword ? (
             <BsFillEyeSlashFill 
@@ -60,3 +81,4 @@ function SignUp() {
 }
 
 export default SignUp;
+
