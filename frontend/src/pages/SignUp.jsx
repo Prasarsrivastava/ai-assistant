@@ -5,7 +5,7 @@ import { BsEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import axios from "axios";
 import { UserDataContext } from "../context/UserContextData.jsx";
 
-import { get } from "mongoose";
+import { get, set } from "mongoose";
 
 function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
@@ -18,6 +18,7 @@ function SignUp() {
   const [name,setName]=useState("");
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
+  const[err,setErr]=useState("");
   const handleSignUp=async(e)=>{
     e.preventDefault();
 try{
@@ -34,6 +35,7 @@ navigate("/signin");
 }
 catch(err){
   console.log(err);
+  setErr(err.response.data.message);
 }
   }
 
@@ -79,11 +81,13 @@ catch(err){
             />
           )}
         </div>
+{          err.length>0 && <p className="text-red-500 text-[17px]">*{err}</p>}
+
         <button className="min-w-[150px] h-[60px] mt-[30px] text-black font-semibold bg-white rounded-full text-[19px]">
           Sign Up
         </button>
         <p className="text-white text-[18px] cursor-pointer" onClick={() => navigate("/signin")}>
-          Already have an account? <span className="text-blue-400">Sign In</span>
+          Already have an account? <span className="text-blue-400">SignIn</span>
         </p>
       </form>
     </div>
