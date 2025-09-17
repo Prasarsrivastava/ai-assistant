@@ -1,6 +1,8 @@
 import e from "express"
 import User from "../models/user.models.js"
 import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
+import genToken from "../config/token.js"
 export const signUp = async (req, res) => {
     try{
         const {name,email,password}=req.body
@@ -69,7 +71,7 @@ maxAge:10*24*60*60*1000,
 sameSite:"Strict",
 secure:false
 })
-  return res.status(20).json(user)
+  return res.status(200).json(user)
     } 
 
 catch(error){
@@ -79,7 +81,7 @@ catch(error){
 }
 export const logOut=async(req,res)=>{
     try{
-        res.clearcookie("token")
+        res.clearCookie("token")
         return res.status(200).json({message:"Logged out successfully"})
     }catch (error){
         return res.status(500).json({message:`Logout error ${error}`})

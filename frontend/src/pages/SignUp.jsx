@@ -3,16 +3,18 @@ import { useNavigate } from "react-router-dom";
 import bg from "../assets/authBg.png";
 import { BsEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import axios from "axios";
-import { UserDataContext } from "../context/UserContext.jsx";
+import { UserDataContext } from "../context/UserContextData.jsx";
+
+import { get } from "mongoose";
 
 function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const {serverUrl}=useContext(UserDataContext);
  
  const navigate = useNavigate();
-  // const togglePasswordVisibility = () => {
-  //   setShowPassword(!showPassword);
-  // };
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const [name,setName]=useState("");
   const [email,setEmail]=useState("");
   const [password,setPassword]=useState("");
@@ -21,6 +23,14 @@ function SignUp() {
 try{
   let result=await axios.post(`${serverUrl}/api/auth/signup`,{name,email,password},{withCredentials:true});
   console.log(result);
+
+if(result.data)
+{
+setName("");
+setEmail("");
+setPassword("");
+navigate("/signin");
+}
 }
 catch(err){
   console.log(err);

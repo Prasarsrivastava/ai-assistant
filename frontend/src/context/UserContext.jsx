@@ -1,8 +1,9 @@
 import React from "react";
-import { createContext } from "react";
+import {UserDataContext} from "./UserContextData.jsx"
+// import { createContext } from "react";
 
 
-export const UserDataContext=createContext();
+// export const UserDataContext=createContext();
 
 
 function UserContext({ children }) 
@@ -11,9 +12,9 @@ function UserContext({ children })
     const value={serverUrl}
     return (
       
-< UserContext.Provider value={{value}}>
+< UserDataContext.Provider value={value}>
 {children}
-</UserContext.Provider>
+</UserDataContext.Provider>
        
     )
 }
