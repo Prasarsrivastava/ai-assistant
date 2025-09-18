@@ -5,6 +5,7 @@ import authRouter from "./routes/auth.routes.js";
 import cookieParser from "cookie-parser";
 import authcontroller from "./controllers/auth.controller.js";
 import cors from "cors";
+import userRouter from "./routes/user.routes.js";
 dotenv.config()
 
 const app=express()
@@ -20,6 +21,7 @@ const port = process.env.PORT || 8000;
 app.use(express.json())
 app.use(cookieParser())
 app.use("/api/auth",authRouter)
+app.use("/api/user",userRouter)
 // app.get("/",(req,res)=>{
 //     res.send("Hello 2783 World")
 // })

@@ -17,13 +17,16 @@ function SignIn() {
   };
   // const [name,setName]=useState("");
   const [email,setEmail]=useState("");
+  const [loading,setLoading]=useState(false);
   const [password,setPassword]=useState("");
   const[err,setErr]=useState("");
   const handleLogIn=async(e)=>{
     e.preventDefault();
+    setLoading(true);
 try{
   let result=await axios.post(`${serverUrl}/api/auth/login`,{email,password},{withCredentials:true});
   console.log(result);
+  setLoading(false);
 
 if(result.data)
 {
@@ -35,6 +38,7 @@ navigate("/signup");
 }
 catch(err){
   console.log(err);
+  setLoading(false);
   setErr(err.response.data.message);
 }
   }
@@ -83,8 +87,8 @@ catch(err){
         </div>
 {          err.length>0 && <p className="text-red-500">{err}</p>}
 
-        <button className="min-w-[150px] h-[60px] mt-[30px] text-black font-semibold bg-white rounded-full text-[19px]">
-          Sign In
+        <button className="min-w-[150px] h-[60px] mt-[30px] text-black font-semibold bg-white rounded-full text-[19px]" disabled={loading}>
+         {loading?"loading...":" Sign In"}
         </button>
         <p className="text-white text-[18px] cursor-pointer" onClick={() => navigate("/signup")}>
           want to create  a new account? <span className="text-blue-400">SignUp</span>
